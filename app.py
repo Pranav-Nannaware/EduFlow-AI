@@ -3,10 +3,14 @@ import os
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 import google.generativeai as genai
 from main import CONFIG, EduFlowAI
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Initialize Flask app
 app = Flask(__name__)
-app.secret_key = 'eduflow_secret_key'  # Replace with a secure key in production
+app.secret_key = os.getenv("FLASK_SECRET_KEY", 'eduflow_dev_key')  # Use environment variable in production
 
 # Initialize Gemini
 genai.configure(api_key=CONFIG["gemini_api_key"])

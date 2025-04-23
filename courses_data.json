@@ -1,0 +1,96 @@
+{
+  "interests": ["Computer Science", "Electrical", "Mechanical", "Civil", "Biology", "Commerce", "Arts"],
+  "courses": {
+    "Computer Science": [
+      {
+        "name": "AI/ML Engineer",
+        "duration": "6 months",
+        "technologies": ["Python", "TensorFlow", "PyTorch"],
+        "overview": "A comprehensive course covering modern machine learning techniques, deep learning frameworks, and practical AI applications.",
+        "career_outlook": "High demand for AI/ML engineers with projected 20% annual growth in the field."
+      },
+      {
+        "name": "Web Developer",
+        "duration": "4 months",
+        "technologies": ["HTML", "CSS", "JavaScript", "React", "Node.js"],
+        "overview": "Learn to build responsive, modern web applications using industry-standard tools and frameworks.",
+        "career_outlook": "Abundant opportunities in startups, tech companies, and freelance markets."
+      },
+      {
+        "name": "Cybersecurity Specialist",
+        "duration": "5 months",
+        "technologies": ["Network Security", "Penetration Testing", "Cryptography"],
+        "overview": "Master the skills to protect systems and networks from digital attacks and security breaches.",
+        "career_outlook": "Critical shortage of cybersecurity professionals worldwide with excellent compensation."
+      }
+    ],
+    "Electrical": [
+      {
+        "name": "Electrical Design Engineer",
+        "duration": "8 months",
+        "technologies": ["AutoCAD", "MATLAB", "Circuit Design"],
+        "overview": "Develop expertise in designing electrical systems, power distribution networks, and control systems.",
+        "career_outlook": "Steady demand in infrastructure, manufacturing, and renewable energy sectors."
+      },
+      {
+        "name": "IoT Specialist",
+        "duration": "6 months",
+        "technologies": ["Arduino", "Raspberry Pi", "Embedded Systems"],
+        "overview": "Learn to design and implement connected device ecosystems and smart home technologies.",
+        "career_outlook": "Rapidly growing field with applications across consumer and industrial markets."
+      }
+    ],
+    "Mechanical": [
+      {
+        "name": "CAD Designer",
+        "duration": "5 months",
+        "technologies": ["AutoCAD", "SolidWorks", "3D Modeling"],
+        "overview": "Master computer-aided design for mechanical components and assemblies.",
+        "career_outlook": "Essential skill for various manufacturing industries with stable job market."
+      },
+      {
+        "name": "Robotics Engineer",
+        "duration": "9 months",
+        "technologies": ["ROS", "Motion Planning", "Control Systems"],
+        "overview": "Design, build and program robotic systems for industrial and consumer applications.",
+        "career_outlook": "Growing demand in automation, healthcare, and advanced manufacturing."
+      }
+    ],
+    "Civil": [
+      {
+        "name": "Structural Engineer",
+        "duration": "7 months",
+        "technologies": ["AutoCAD", "STAAD.Pro", "BIM"],
+        "overview": "Learn structural analysis, design principles, and building code compliance.",
+        "career_outlook": "Consistent demand in construction, infrastructure development, and consulting."
+      }
+    ],
+    "Biology": [
+      {
+        "name": "Bioinformatics Specialist",
+        "duration": "6 months",
+        "technologies": ["Python", "R", "Genomic Analysis"],
+        "overview": "Apply computational methods to analyze biological data and solve complex biological problems.",
+        "career_outlook": "Emerging field with opportunities in research, pharma, and biotech companies."
+      }
+    ],
+    "Commerce": [
+      {
+        "name": "Financial Analyst",
+        "duration": "4 months",
+        "technologies": ["Excel", "SQL", "Financial Modeling"],
+        "overview": "Develop skills in financial analysis, forecasting, and investment evaluation.",
+        "career_outlook": "Strong demand in banking, investment firms, and corporate finance departments."
+      }
+    ],
+    "Arts": [
+      {
+        "name": "Digital Content Creator",
+        "duration": "3 months",
+        "technologies": ["Adobe Creative Suite", "Content Strategy", "Social Media"],
+        "overview": "Learn to create engaging digital content across multiple platforms and formats.",
+        "career_outlook": "Expanding opportunities in marketing, entertainment, and independent content creation."
+      }
+    ]
+  }
+} 

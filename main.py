@@ -2,12 +2,16 @@ import json
 import os
 from typing import Dict, List, Optional, Tuple
 import google.generativeai as genai
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Configuration
 CONFIG = {
     "user_data_file": "user_profiles.json",
     "courses_data_file": "courses_data.json",
-    "gemini_api_key": "AIzaSyD7BoK4jxzGJ6xzYUlzt6arb0rvF0kyuVs",  # Replace with your actual API key
+    "gemini_api_key": os.getenv("GEMINI_API_KEY", ""),  # Load from environment variable
     "quiz_pass_threshold": 70  # Percentage score needed to pass
 }
 

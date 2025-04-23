@@ -12,6 +12,7 @@ EduFlow AI is an intelligent educational platform that leverages Google's Gemini
 - [API Integration](#api-integration)
 - [User Journey](#user-journey)
 - [Future Enhancements](#future-enhancements)
+- [Setup Guide](#setup-guide)
 
 ## Overview
 
@@ -92,8 +93,8 @@ eduflow-ai/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-username/eduflow-ai.git
-cd eduflow-ai
+git clone https://github.com/Pranav-Nannaware/EduFlow-AI.git
+cd EduFlow-AI
 ```
 
 2. Install required packages:
@@ -111,6 +112,67 @@ python app.py
 ```
 
 5. Access the web interface at `http://127.0.0.1:5000`
+
+## Setup Guide
+
+### Prerequisites
+- Python 3.8 or higher
+- Pip (Python package manager)
+- A Gemini API key from Google AI Studio
+
+### Installation Steps
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Pranav-Nannaware/EduFlow-AI.git
+   cd EduFlow-AI
+   ```
+
+2. **Create a virtual environment**
+   ```bash
+   python -m venv venv
+   ```
+
+3. **Activate the virtual environment**
+   - On Windows:
+     ```bash
+     venv\Scripts\activate
+     ```
+   - On macOS/Linux:
+     ```bash
+     source venv/bin/activate
+     ```
+
+4. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+5. **Set up environment variables**
+   - Copy the example environment file:
+     ```bash
+     cp .env.example .env
+     ```
+   - Edit the `.env` file and add your Gemini API key and a secure Flask secret key
+
+6. **Run the application**
+   - To run the CLI version:
+     ```bash
+     python main.py
+     ```
+   - To run the web application:
+     ```bash
+     python app.py
+     ```
+
+7. **Access the web application**
+   - Open your browser and navigate to `http://127.0.0.1:5000`
+
+## Troubleshooting
+
+- If you encounter issues with the Gemini API, make sure your API key is valid and properly set in the `.env` file
+- For first-time users, the application will create necessary JSON files automatically
+- If you're getting module not found errors, ensure all dependencies are installed by running `pip install -r requirements.txt`
 
 ## Usage
 
