@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+
+{% block title %}EduFlow AI - Personalized Learning Path{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero text-center mb-5">
+    <div class="container">
+        <h1>Transform Your Learning Journey with AI</h1>
+        <p class="lead">Personalized education paths, interactive learning, and AI-powered guidance to help you achieve your career goals.</p>
+        <div class="mt-4">
+            {% if 'user_id' in session %}
+                <a href="{{ url_for('dashboard') }}" class="btn btn-light btn-lg me-3">My Dashboard</a>
+                <a href="{{ url_for('courses') }}" class="btn btn-outline-light btn-lg">Browse Courses</a>
+            {% else %}
+                <a href="{{ url_for('register') }}" class="btn btn-light btn-lg me-3">Get Started</a>
+                <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg">Sign In</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="container my-5">
+    <h2 class="text-center mb-5">How EduFlow AI Works</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 dashboard-card text-center py-4">
+                <div class="card-body">
+                    <i class="fas fa-user-graduate dashboard-icon"></i>
+                    <h3 class="card-title">Personalized Profiles</h3>
+                    <p class="card-text">Tell us about your interests, background, and goals. We'll create a personalized learning journey just for you.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 dashboard-card text-center py-4">
+                <div class="card-body">
+                    <i class="fas fa-brain dashboard-icon"></i>
+                    <h3 class="card-title">AI-Powered Recommendations</h3>
+                    <p class="card-text">Our advanced AI analyzes your profile to recommend courses and learning paths tailored to your unique needs.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 dashboard-card text-center py-4">
+                <div class="card-body">
+                    <i class="fas fa-comment-dots dashboard-icon"></i>
+                    <h3 class="card-title">AI Tutor Assistance</h3>
+                    <p class="card-text">Get 24/7 learning support from our AI tutor. Ask questions, get explanations, and enhance your understanding.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Benefits Section -->
+<section class="bg-light py-5 my-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Benefits of EduFlow AI</h2>
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="d-flex">
+                    <div class="me-3">
+                        <i class="fas fa-check-circle text-primary fa-2x"></i>
+                    </div>
+                    <div>
+                        <h4>Adaptive Learning</h4>
+                        <p>Our platform adapts to your learning pace and style, ensuring you get the most effective educational experience.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="d-flex">
+                    <div class="me-3">
+                        <i class="fas fa-check-circle text-primary fa-2x"></i>
+                    </div>
+                    <div>
+                        <h4>Career-Focused Courses</h4>
+                        <p>All courses are designed with career outcomes in mind, focusing on practical skills that employers value.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="d-flex">
+                    <div class="me-3">
+                        <i class="fas fa-check-circle text-primary fa-2x"></i>
+                    </div>
+                    <div>
+                        <h4>Interactive Assessments</h4>
+                        <p>Test your knowledge with AI-generated quizzes that adjust to your performance and provide targeted feedback.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="d-flex">
+                    <div class="me-3">
+                        <i class="fas fa-check-circle text-primary fa-2x"></i>
+                    </div>
+                    <div>
+                        <h4>Visual Learning Maps</h4>
+                        <p>Understand your learning journey with AI-generated mindmaps that illustrate course content and connections.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="container my-5">
+    <h2 class="text-center mb-5">What Our Users Say</h2>
+    <div class="row">
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                    </div>
+                    <p class="card-text">"EduFlow AI completely transformed my learning experience. The personalized recommendations helped me focus on exactly what I needed to advance my career."</p>
+                    <div class="d-flex align-items-center mt-3">
+                        <div class="flex-shrink-0">
+                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                <span class="fs-4">RK</span>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5 class="mb-0">Rahul K.</h5>
+                            <p class="mb-0 text-muted">Web Developer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                    </div>
+                    <p class="card-text">"The AI tutor is phenomenal! Having 24/7 support for all my questions made learning complex topics so much easier. I'm impressed with how helpful it was."</p>
+                    <div class="d-flex align-items-center mt-3">
+                        <div class="flex-shrink-0">
+                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                <span class="fs-4">SP</span>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5 class="mb-0">Sneha P.</h5>
+                            <p class="mb-0 text-muted">Data Scientist</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star-half-alt text-warning"></i>
+                    </div>
+                    <p class="card-text">"I loved the mindmaps that helped me visualize each course's structure. The quizzes were challenging but fair, and the feedback was really helpful for improvement."</p>
+                    <div class="d-flex align-items-center mt-3">
+                        <div class="flex-shrink-0">
+                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                <span class="fs-4">AM</span>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5 class="mb-0">Arjun M.</h5>
+                            <p class="mb-0 text-muted">Electrical Engineer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="bg-primary text-white text-center py-5 my-5">
+    <div class="container">
+        <h2 class="mb-4">Ready to Start Your Learning Journey?</h2>
+        <p class="lead mb-4">Join thousands of learners who are achieving their educational goals with EduFlow AI.</p>
+        {% if 'user_id' in session %}
+            <a href="{{ url_for('dashboard') }}" class="btn btn-light btn-lg">Go to Dashboard</a>
+        {% else %}
+            <a href="{{ url_for('register') }}" class="btn btn-light btn-lg">Get Started Today</a>
+        {% endif %}
+    </div>
+</section>
+{% endblock %} 

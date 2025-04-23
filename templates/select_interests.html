@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Select Interests - EduFlow AI{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow">
+            <div class="card-body p-5">
+                <h2 class="text-center mb-4">Select Your Interests</h2>
+                <p class="text-center text-muted mb-4">Choose at least 3 areas that interest you. This helps us recommend the most relevant courses.</p>
+                
+                <form method="POST" action="{{ url_for('select_interests') }}">
+                    <div class="row">
+                        {% for interest in interests %}
+                        <div class="col-md-6 mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="interests" value="{{ interest }}" id="interest-{{ loop.index }}">
+                                <label class="form-check-label" for="interest-{{ loop.index }}">
+                                    {{ interest }}
+                                </label>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">Continue</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    
+    form.addEventListener('submit', function(e) {
+        let checked = 0;
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) checked++;
+        });
+        
+        if (checked < 3) {
+            e.preventDefault();
+            alert('Please select at least 3 interests.');
+        }
+    });
+});
+</script>
+{% endblock %} 

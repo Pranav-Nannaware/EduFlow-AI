@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Eligibility Quiz - {{ course.name }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('courses') }}">Courses</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('course_details', course_name=course.name) }}">{{ course.name }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Eligibility Quiz</li>
+                </ol>
+            </nav>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title mb-4">{{ course.name }} Eligibility Quiz</h1>
+                    <p class="text-muted mb-4">This quiz will help assess your readiness for this course. Answer the questions to the best of your ability. A score of {{ config.quiz_pass_threshold }}% or higher indicates you're ready to begin.</p>
+                    
+                    <div class="alert alert-info">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="fas fa-info-circle fa-2x"></i>
+                            </div>
+                            <div>
+                                <h5 class="alert-heading">Not sure if you're ready?</h5>
+                                <p class="mb-0">You can skip this quiz and still enroll in the course. This assessment is meant to help you gauge your preparedness.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <form method="POST" action="{{ url_for('evaluate_quiz') }}">
+        {% for i, question in enumerate(questions) %}
+            <div class="card mb-4 quiz-question">
+                <div class="card-header">
+                    <h5 class="mb-0">Question {{ i+1 }}</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-4">{{ question.question }}</p>
+                    
+                    <input type="hidden" name="q{{ i }}" value="" required>
+                    
+                    {% for option in question.options %}
+                        <div class="quiz-option" data-question="{{ i }}" data-answer="{{ option }}">
+                            {{ option }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+        
+        <div class="d-flex justify-content-between">
+            <a href="{{ url_for('course_details', course_name=course.name) }}" class="btn btn-outline-secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary">Submit Answers</button>
+        </div>
+    </form>
+</div>
+{% endblock %} 

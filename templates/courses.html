@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}Courses - EduFlow AI{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="mb-3">Recommended Courses</h1>
+            <p class="text-muted">These courses are tailored to your selected interests. Explore each course to find the perfect fit for your learning journey.</p>
+        </div>
+    </div>
+
+    <!-- Filters and Search -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="input-group">
+                <input type="text" class="form-control" id="courseSearch" placeholder="Search courses...">
+                <button class="btn btn-primary" type="button" id="searchButton">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <select class="form-select" id="interestFilter">
+                <option value="all" selected>All Interests</option>
+                {% for interest in session.user.interests %}
+                    <option value="{{ interest }}">{{ interest }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <!-- Course Listings -->
+    {% if courses %}
+        <div class="row g-4" id="courseList">
+            {% for course in courses %}
+                <div class="col-md-6 col-lg-4 course-item">
+                    <div class="card h-100 course-card">
+                        <div class="card-body">
+                            <h3 class="card-title">{{ course.name }}</h3>
+                            <p class="text-muted">{{ course.duration }}</p>
+                            <div class="mb-3">
+                                {% for tech in course.technologies %}
+                                    <span class="course-tech-badge">{{ tech }}</span>
+                                {% endfor %}
+                            </div>
+                            <p>{{ course.get('overview', 'Comprehensive course covering all key aspects.') | truncate(100) }}</p>
+                        </div>
+                        <div class="card-footer bg-transparent border-top-0">
+                            <a href="{{ url_for('course_details', course_name=course.name) }}" class="btn btn-primary w-100">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <div class="mb-4">
+                <i class="fas fa-book-open fa-5x text-muted"></i>
+            </div>
+            <h3>No Courses Found</h3>
+            <p class="text-muted">We couldn't find any courses matching your interests. Please update your interests or check back later.</p>
+            <a href="{{ url_for('select_interests') }}" class="btn btn-primary mt-3">Update Interests</a>
+        </div>
+    {% endif %}
+</div>
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const courseSearch = document.getElementById('courseSearch');
+        const interestFilter = document.getElementById('interestFilter');
+        const searchButton = document.getElementById('searchButton');
+        const courseItems = document.querySelectorAll('.course-item');
+        
+        // Function to filter courses
+        function filterCourses() {
+            const searchTerm = courseSearch.value.toLowerCase();
+            const interestValue = interestFilter.value.toLowerCase();
+            
+            courseItems.forEach(item => {
+                const courseName = item.querySelector('.card-title').textContent.toLowerCase();
+                const courseDesc = item.querySelector('p:not(.text-muted)') ? 
+                                  item.querySelector('p:not(.text-muted)').textContent.toLowerCase() : '';
+                const techBadges = item.querySelectorAll('.course-tech-badge');
+                
+                let techMatch = false;
+                techBadges.forEach(badge => {
+                    if (badge.textContent.toLowerCase().includes(searchTerm)) {
+                        techMatch = true;
+                    }
+                });
+                
+                const matchesSearch = courseName.includes(searchTerm) || 
+                                     courseDesc.includes(searchTerm) || 
+                                     techMatch;
+                
+                const matchesInterest = interestValue === 'all' || 
+                                       item.textContent.toLowerCase().includes(interestValue);
+                
+                if (matchesSearch && matchesInterest) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+        
+        // Event listeners
+        searchButton.addEventListener('click', filterCourses);
+        courseSearch.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') filterCourses();
+        });
+        interestFilter.addEventListener('change', filterCourses);
+    });
+</script>
+{% endblock %}
+{% endblock %} 

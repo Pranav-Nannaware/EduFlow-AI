@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - EduFlow AI{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Welcome Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h1 class="card-title mb-3">Welcome back, {{ user.name }}!</h1>
+                            <p class="card-text text-muted">Here's your personalized learning dashboard. Continue your journey or explore new courses tailored to your interests.</p>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <a href="{{ url_for('courses') }}" class="btn btn-primary">Explore Courses</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Overview -->
+    <div class="row mb-4 g-4">
+        <div class="col-md-4">
+            <div class="card dashboard-card h-100 animate-on-scroll">
+                <div class="card-body text-center">
+                    <i class="fas fa-book-open dashboard-icon"></i>
+                    <h3>Your Interests</h3>
+                    <p>
+                        {% for interest in user.interests %}
+                            <span class="badge bg-primary me-1">{{ interest }}</span>
+                        {% endfor %}
+                    </p>
+                    <a href="{{ url_for('select_interests') }}" class="btn btn-outline-primary mt-3">Update Interests</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card dashboard-card h-100 animate-on-scroll">
+                <div class="card-body text-center">
+                    <i class="fas fa-graduation-cap dashboard-icon"></i>
+                    <h3>Current Course</h3>
+                    {% if user.get('current_course') %}
+                        <p>{{ user.current_course }}</p>
+                        <a href="{{ url_for('course_details', course_name=user.current_course) }}" class="btn btn-primary mt-3">Continue Learning</a>
+                    {% else %}
+                        <p class="text-muted">You're not enrolled in any course yet.</p>
+                        <a href="{{ url_for('courses') }}" class="btn btn-primary mt-3">Find Courses</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card dashboard-card h-100 animate-on-scroll">
+                <div class="card-body text-center">
+                    <i class="fas fa-robot dashboard-icon"></i>
+                    <h3>AI Tutor</h3>
+                    <p>Get personalized help with your learning journey.</p>
+                    <a href="{{ url_for('tutor') }}" class="btn btn-primary mt-3">Ask AI Tutor</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Course History -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="m-0">Your Learning Journey</h3>
+                </div>
+                <div class="card-body">
+                    {% if user.course_history %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Course</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for course in user.course_history %}
+                                        <tr>
+                                            <td>{{ course.course }}</td>
+                                            <td>
+                                                {% if course.status == 'enrolled' %}
+                                                    <span class="badge bg-success">Enrolled</span>
+                                                    {% if course.get('quiz_skipped') %}
+                                                        <span class="badge bg-warning text-dark">Quiz Skipped</span>
+                                                    {% endif %}
+                                                {% else %}
+                                                    <span class="badge bg-danger">Not Enrolled</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ course.date }}</td>
+                                            <td>
+                                                <a href="{{ url_for('course_details', course_name=course.course) }}" class="btn btn-sm btn-outline-primary">View Course</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5">
+                            <p class="text-muted mb-3">You haven't enrolled in any courses yet.</p>
+                            <a href="{{ url_for('courses') }}" class="btn btn-primary">Browse Courses</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recommended Courses -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="m-0">Recommended for You</h3>
+                    <a href="{{ url_for('courses') }}" class="btn btn-sm btn-outline-primary">View All</a>
+                </div>
+                <div class="card-body">
+                    <div class="row g-4">
+                        {% set recommended_found = false %}
+                        {% for interest in user.interests %}
+                            {% if interest in eduflow.courses_data.courses %}
+                                {% for course in eduflow.courses_data.courses[interest][:2] %}
+                                    {% set recommended_found = true %}
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="card h-100 course-card">
+                                            <div class="card-body">
+                                                <h4 class="card-title">{{ course.name }}</h4>
+                                                <p class="text-muted">{{ course.duration }}</p>
+                                                <div class="mb-3">
+                                                    {% for tech in course.technologies %}
+                                                        <span class="course-tech-badge">{{ tech }}</span>
+                                                    {% endfor %}
+                                                </div>
+                                                <a href="{{ url_for('course_details', course_name=course.name) }}" class="btn btn-outline-primary">Learn More</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if not recommended_found %}
+                            <div class="col-12 text-center py-4">
+                                <p class="text-muted">Based on your interests, we don't have recommendations yet. Please check back later.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

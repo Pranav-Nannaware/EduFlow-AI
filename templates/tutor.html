@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}AI Tutor - EduFlow AI{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="mb-3">AI Tutor</h1>
+            <p class="text-muted">Ask any question about your courses, learning path, or general knowledge. Our AI tutor is here to help you succeed.</p>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-8 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="m-0">Chat with AI Tutor</h3>
+                </div>
+                <div class="card-body">
+                    <!-- Chat Container -->
+                    <div class="chat-container mb-4" id="chatContainer">
+                        <div class="tutor-message chat-message">
+                            <p>👋 Hello, {{ user.name }}! I'm your AI learning assistant. How can I help you today?</p>
+                        </div>
+                        
+                        {% if question %}
+                            <div class="user-message chat-message">
+                                <p>{{ question }}</p>
+                            </div>
+                            
+                            <div class="tutor-message chat-message">
+                                <div>{{ answer|safe }}</div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Message Input -->
+                    <form method="POST" action="{{ url_for('tutor') }}">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="question" id="questionInput" placeholder="Ask your question here..." required>
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-paper-plane me-1"></i> Send
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4 class="m-0">Sample Questions</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-3">Not sure what to ask? Try one of these questions:</p>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="button" class="btn btn-outline-primary text-start sample-question" data-question="What prerequisites do I need for the AI/ML Engineer course?">
+                            What prerequisites do I need for the AI/ML Engineer course?
+                        </button>
+                        <button type="button" class="btn btn-outline-primary text-start sample-question" data-question="Can you explain the difference between supervised and unsupervised learning?">
+                            Can you explain the difference between supervised and unsupervised learning?
+                        </button>
+                        <button type="button" class="btn btn-outline-primary text-start sample-question" data-question="What career paths are available after completing the Web Developer course?">
+                            What career paths are available after completing the Web Developer course?
+                        </button>
+                        <button type="button" class="btn btn-outline-primary text-start sample-question" data-question="How should I approach learning Python as a beginner?">
+                            How should I approach learning Python as a beginner?
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="m-0">Currently Learning</h4>
+                </div>
+                <div class="card-body">
+                    {% if user.get('current_course') %}
+                        <p>You're currently enrolled in:</p>
+                        <div class="d-grid">
+                            <a href="{{ url_for('course_details', course_name=user.current_course) }}" class="btn btn-primary">
+                                {{ user.current_course }}
+                            </a>
+                        </div>
+                    {% else %}
+                        <p class="text-muted">You're not enrolled in any course yet.</p>
+                        <div class="d-grid">
+                            <a href="{{ url_for('courses') }}" class="btn btn-primary">Find Courses</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Auto-scroll chat to bottom
+        const chatContainer = document.getElementById('chatContainer');
+        if (chatContainer) {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        // Handle sample question clicks
+        const sampleQuestions = document.querySelectorAll('.sample-question');
+        const questionInput = document.getElementById('questionInput');
+        
+        sampleQuestions.forEach(button => {
+            button.addEventListener('click', function() {
+                const question = this.getAttribute('data-question');
+                questionInput.value = question;
+                questionInput.focus();
+            });
+        });
+    });
+</script>
+{% endblock %}
+{% endblock %} 

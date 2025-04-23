@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block title %}My Profile - EduFlow AI{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="mb-4">My Profile</h1>
+            
+            <div class="card profile-header">
+                <div class="row align-items-center">
+                    <div class="col-md-4 text-center">
+                        <div class="mx-auto mb-3" style="width: 150px; height: 150px; background-color: #4e73df; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <span class="text-white" style="font-size: 64px;">{{ user.name[:1] }}</span>
+                        </div>
+                        <h3>{{ user.name }}</h3>
+                        <p class="text-muted mb-md-0">Member since 2023</p>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-book dashboard-icon"></i>
+                                        <h4>{{ user.course_history|length }}</h4>
+                                        <p class="text-muted">Courses</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-star dashboard-icon"></i>
+                                        <h4>{{ user.interests|length }}</h4>
+                                        <p class="text-muted">Interests</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="m-0">Personal Information</h3>
+                    <button type="button" class="btn btn-sm btn-outline-primary" disabled>Edit</button>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-4 text-muted">Name:</div>
+                        <div class="col-md-8">{{ user.name }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 text-muted">Age:</div>
+                        <div class="col-md-8">{{ user.age }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 text-muted">Language:</div>
+                        <div class="col-md-8">{{ user.language }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 text-muted">Education:</div>
+                        <div class="col-md-8">{{ user.education or 'Not specified' }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 text-muted">Email:</div>
+                        <div class="col-md-8">{{ user.email or 'Not specified' }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="m-0">Interests</h3>
+                    <a href="{{ url_for('select_interests') }}" class="btn btn-sm btn-outline-primary">Update</a>
+                </div>
+                <div class="card-body">
+                    {% if user.interests %}
+                        <div class="d-flex flex-wrap gap-2">
+                            {% for interest in user.interests %}
+                                <span class="badge bg-primary p-2">{{ interest }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted">No interests selected yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="m-0">Course History</h3>
+                </div>
+                <div class="card-body">
+                    {% if user.course_history %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Course</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for course in user.course_history %}
+                                        <tr>
+                                            <td>{{ course.course }}</td>
+                                            <td>
+                                                {% if course.status == 'enrolled' %}
+                                                    <span class="badge bg-success">Enrolled</span>
+                                                    {% if course.get('quiz_skipped') %}
+                                                        <span class="badge bg-warning text-dark">Quiz Skipped</span>
+                                                    {% endif %}
+                                                {% else %}
+                                                    <span class="badge bg-danger">Not Enrolled</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ course.date }}</td>
+                                            <td>
+                                                <a href="{{ url_for('course_details', course_name=course.course) }}" class="btn btn-sm btn-outline-primary">View Course</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <p class="text-muted mb-3">You haven't enrolled in any courses yet.</p>
+                            <a href="{{ url_for('courses') }}" class="btn btn-primary">Browse Courses</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
